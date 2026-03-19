@@ -13,11 +13,11 @@ class WordleGame:
         # Set up the word provider and prepare storage for the secret word
         self.provider = WordProvider()
         self.secret = None
+        self.MAX_ATTEMPTS =6
 
     def play_round(self):
         # Pick a random word and print it
         # Get and store a random word from the provider
-        self.MAX_ATTEMPTS =6
         self.secret = self.provider.get_word()
         print("Secret word:", self.secret)
         attempts =0
@@ -29,7 +29,7 @@ class WordleGame:
             else:
                  print(f"Wrong guess. Try again and Attempts remaining: {self.MAX_ATTEMPTS - attempts}.")
             attempts += 1
-
+        if(attempts == 6 and guess != self.secret)
 
 if __name__ == "__main__":
     game = WordleGame()

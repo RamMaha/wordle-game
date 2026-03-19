@@ -29,7 +29,8 @@ class WordleGame:
             else:
                  print(f"Wrong guess. Try again and Attempts remaining: {self.MAX_ATTEMPTS - attempts}.")
             attempts += 1
-        if(attempts == 6 and guess != self.secret)
+        if(attempts == 6 and guess != self.secret):
+            print("Out of attempts.")
 
 if __name__ == "__main__":
     game = WordleGame()

@@ -17,16 +17,18 @@ class WordleGame:
     def play_round(self):
         # Pick a random word and print it
         # Get and store a random word from the provider
+        self.MAX_ATTEMPTS =6
         self.secret = self.provider.get_word()
         print("Secret word:", self.secret)
+        attempts =0
         while attempts < 6:
             guess = input("Enter your guess: ")
             if guess == self.secret:
                 print("Correct! You guessed the word.")
                 break
             else:
-                 print("Wrong guess. Try again.")
-            counter += 1
+                 print(f"Wrong guess. Try again and Attempts remaining: {self.MAX_ATTEMPTS - attempts}.")
+            attempts += 1
 
 
 if __name__ == "__main__":

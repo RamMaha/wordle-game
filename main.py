@@ -27,7 +27,7 @@ class WordleGame:
         attempts =0
         while attempts < self.MAX_ATTEMPTS:
             guess = input("Enter your guess: ")
-            if not validator.is_valid(guess, secret):
+            if not self.validator.is_valid(guess, self.secret):
                 continue       # do not increment attempts
             attempts += 1  
             feedback = self.validator.validate(guess, self.secret)
@@ -50,13 +50,14 @@ class GuessValidator:
         return feedback
 
     def is_valid(self, guess, secret):
+        guess = guess.strip()
         if len(guess) != len(secret):
             print(f"Invalid guess length, expected {len(secret)} letters.")
             return False
         if not guess.isalpha():
             print("Guess must contain only letters.")
             return False
-        return True     
+        return True
     
     def _check_correct_positions(self, guess, remaining_letters, feedback):
         for i in range(len(remaining_letters)):

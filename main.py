@@ -51,7 +51,7 @@ class GuessValidator:
 
     def is_valid(self, guess, secret):
         if len(guess) != len(secret):
-            print(f"“Invalid guess length, expected { len(secret) } letters.”)
+            print(f"Invalid guess length, expected { len(secret) } letters.")
             return False
         if not guess.isalpha():
             print("Guess must contain only letters.")

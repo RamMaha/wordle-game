@@ -24,10 +24,12 @@ class WordleGame:
         # Pick a random word and print it
         # Get and store a random word from the provider
         self.secret = self.provider.get_word()
-        #print("Secret word:", self.secret)
         attempts =0
-        while attempts < 6:
+        while attempts < self.MAX_ATTEMPTS:
             guess = input("Enter your guess: ")
+            if not self.validator.is_valid(guess, self.secret):
+                continue   
+            attempts += 1
             feedback = self.validator.validate(guess, self.secret)
             print("".join(feedback))
             if guess == self.secret:
@@ -36,7 +38,6 @@ class WordleGame:
             else:
                 print("Wrong guess.")
                 print("Attempts remaining:", self.MAX_ATTEMPTS - attempts)
-            attempts += 1
         if(attempts == 6 and guess != self.secret):
             print("Out of attempts.")
             
@@ -48,6 +49,15 @@ class GuessValidator:
         self._check_wrong_positions(guess, remaining_letters, feedback)
         return feedback
 
+    def is_valid(self, guess, secret):
+        if len(guess) != len(secret):
+            print(f"“Invalid guess length, expected { len(secret) } letters.”)
+            return False
+        if not guess.isalpha():
+            print("Guess must contain only letters.")
+            return False
+        return True     
+    
     def _check_correct_positions(self, guess, remaining_letters, feedback):
         for i in range(len(remaining_letters)):
             if guess[i] == remaining_letters[i]:
@@ -58,7 +68,8 @@ class GuessValidator:
         return feedback
 
     def _check_wrong_positions(self, guess, remaining_letters, feedback):
-         for i, letter in enumerate(guess):
+        remaining_letters = list(remaining_letters)
+        for i, letter in enumerate(guess):
             # skip already-colored (green) positions
             if feedback[i].startswith(GREEN):
                 continue
@@ -66,11 +77,8 @@ class GuessValidator:
                 feedback[i] = f"{YELLOW}{letter}{RESET}"
                 # Consume that occurrence
                 remaining_letters[remaining_letters.index(letter)] = None
-            # else leave feedback[i] as the gray you set earlier
+                # else leave feedback[i] as the gray you set earlier
        
-
-
-
 if __name__ == "__main__":
     game = WordleGame()
     game.play_round()
